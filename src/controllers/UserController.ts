@@ -3,6 +3,7 @@
 // import { User } from "../entities/User";
 // import bcrypt from 'bcryptjs'
 
+
 // class UserController {
 //   private userRepository
 
@@ -216,7 +217,10 @@ class UserController {
       }
 
       if (decoded.profile === 'ADMIN') {
-        next();
+        const user = await this.userRepository.findOne({
+          where: { id: paramsid },
+        });
+        res.status(200).json(user);
         return;
       }
       if (decoded.profile === "DRIVER" && Number(decoded.userId) === paramsid) {
@@ -233,7 +237,7 @@ class UserController {
         res.status(200).json(user); // Retorna os dados do próprio usuário
         return;
       }
-
+      /*
       // if (decoded.profile === "DRIVER" && Number(decoded.id) === paramsid) {
       //   const user = await this.userRepository.findOne({
       //     where: { id: paramsid },
@@ -247,7 +251,7 @@ class UserController {
       //   res.status(200).json(user); // Retorna os dados do usuário específico
       //   return;
       // }
-
+      */
       res.status(403).json({ message: "Acesso negado" }); // Se não for ADMIN ou DRIVER válido
 
     } catch (error) {
@@ -258,63 +262,6 @@ class UserController {
 
 
   updateUser = async (req: Request, res: Response, next: NextFunction) => {
-
-    //   try {
-
-    //     const token = req.headers.authorization?.split(" ")[1]
-    //     const paramsid = Number(req.params.id)
-    //     const bodyUpdate = req.body;
-
-    //     if (!token) {
-    //       res.status(401).json("Token inválido!");
-    //       return;
-    //     }
-
-    //     const decoded = jwt.verify(token, process.env.JWT_SECRET ?? "") as dataJwt;
-
-
-    //     if (isNaN(paramsid)) {
-    //       res.status(400).json({ message: "ID inválido" });
-    //       return
-    //     }
-
-    //     const user = await this.userRepository.findOne({
-    //       where: { id: paramsid },
-    //     });
-
-    //     console.log(user)
-    //     console.log(paramsid)
-
-    //     if (!user) {
-    //       res.status(404).json({ message: "Usuário não encontrado" });
-    //       return;
-    //     }
-
-    //     if (decoded.profile === 'ADMIN') {
-    //       await this.userRepository.update(paramsid, bodyUpdate);
-    //       res.status(200).json({ message: "Usuário atualizado com sucesso!" , bodyUpdate});
-    //       return;
-
-    //     }
-    //     if (decoded.profile === "DRIVER" && Number(decoded.userId) === paramsid) {
-    //       await this.userRepository.update(paramsid, bodyUpdate);
-    //       res.status(200).json({ message: "Perfil atualizado com sucesso!" ,bodyUpdate });
-    //       return;
-    //     }
-
-    //       if (!user) {
-    //         res.status(404).json({ message: "Usuário não encontrado" });
-    //         return;
-    //       }
-
-    //     res.status(403).json({ message: "Acesso negado" }); // Se não for ADMIN ou DRIVER válido
-
-    //   } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json({ message: "Erro ao processar requisição" });
-    //   }
-    // }
-
 
 
     try {
@@ -353,66 +300,6 @@ class UserController {
         }
       }
 
-      // if (decoded.profile === "ADMIN") {
-      //   const userUpdate: Partial<User> = {};
-      //   const driverUpdate: Partial<Driver> = {};
-
-      //   if (bodyUpdate.name) userUpdate.name = bodyUpdate.name;
-      //   if (bodyUpdate.email) userUpdate.email = bodyUpdate.email;
-      //   if (bodyUpdate.password_hash) userUpdate.password_hash = bodyUpdate.password_hash;
-
-      //   await this.userRepository.update(id, userUpdate);
-
-      //   if (user.profile === "DRIVER" && bodyUpdate.full_address) {
-      //     driverUpdate.full_address = bodyUpdate.full_address;
-      //     const driver = await this.userDriverRepository.findOne({ where: { user: { id: Number(id) } } });
-      //     if (driver) {
-      //       await this.userDriverRepository.update(driver.id, driverUpdate);
-      //     }
-      //   }
-      // if (decoded.profile === "ADMIN") {
-      //   const userUpdate: Partial<User> = {};
-      //   const driverUpdate: Partial<Driver> = {};
-
-      //   if (bodyUpdate.name) userUpdate.name = bodyUpdate.name;
-      //   if (bodyUpdate.email) userUpdate.email = bodyUpdate.email;
-      //   if (bodyUpdate.password_hash) userUpdate.password_hash = bodyUpdate.password_hash;
-
-      //   await this.userRepository.update(id, userUpdate);
-
-      //   // Verificar se o usuário sendo atualizado tem o perfil DRIVER
-      //   if (user.profile === "DRIVER" && bodyUpdate.full_address) {
-      //       driverUpdate.full_address = bodyUpdate.full_address;
-      //       const driver = await this.userDriverRepository.findOne({ where: { user: { id: Number(id) } } });
-      //       if (driver) {
-      //           await this.userDriverRepository.update(driver.id, driverUpdate);
-      //       }
-      //   }
-
-
-      //   return res.status(200).json({ message: "Usuário atualizado com sucesso!", userUpdate });
-      // }
-
-      // if (decoded.profile === "DRIVER" && Number(decoded.userId) === Number(id)) {
-      //   const driverUpdate: Partial<Driver> = {};
-      //   const userUpdate: Partial<User> = {};
-
-      //   if (bodyUpdate.name) userUpdate.name = bodyUpdate.name;
-      //   if (bodyUpdate.email) userUpdate.email = bodyUpdate.email;
-      //   if (bodyUpdate.password_hash) userUpdate.password_hash = bodyUpdate.password_hash;
-      //   if (bodyUpdate.full_address) driverUpdate.full_address = bodyUpdate.full_address;
-
-      //   await this.userRepository.update(id, userUpdate);
-
-      //   if (Object.keys(driverUpdate).length > 0) {
-      //     const driver = await this.userDriverRepository.findOne({ where: { user: { id: Number(id) } } });
-      //     if (driver) {
-      //       await this.userDriverRepository.update(driver.id, driverUpdate);
-      //     }
-      //   }
-
-      //   return res.status(200).json({ message: "Perfil atualizado com sucesso!", userUpdate, driverUpdate });
-      // }
       if (decoded.profile === "ADMIN") {
         const userUpdate: Partial<User> = {};
         const driverUpdate: Partial<Driver> = {};
@@ -564,15 +451,17 @@ class UserController {
       if (decoded.profile === "ADMIN") {
         user.status = status;
         await this.userRepository.save(user);
-        res.status(200).json({ message: "Status do usuário atualizado com sucesso!" , user: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          status: user.status,
-          profile: user.profile,
-          created_at: user.created_at,
-          updated_at: user.updated_at
-      }});
+        res.status(200).json({
+          message: "Status do usuário atualizado com sucesso!", user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            status: user.status,
+            profile: user.profile,
+            created_at: user.created_at,
+            updated_at: user.updated_at
+          }
+        });
         return;
       }
 

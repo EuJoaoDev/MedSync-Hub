@@ -1,71 +1,73 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 
 export class CreateTableProduct1740328300136 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
-            new Table({
-                name: "products", // Nome da tabela deve ser plural
-                columns: [
-                    {
-                        name: "id",
-                        type: "int",
-                        isPrimary: true,
-                        isGenerated: true,
-                        generationStrategy: "increment",
-                    },
-                    {
-                        name: "name",
-                        type: "varchar",
-                        length: "255",
-                        isNullable: false,
-                    },
-                    {
-                        name: "amount",
-                        type: "int",
-                        isNullable: false,
-                    },
-                    {
-                        name: "description",
-                        length: "200",
-                        type: "varchar",
-                        isNullable: false,
-                    },
-                    {
-                        name: "url_cover",
-                        length: "200",
-                        type: "varchar",
-                        isNullable: true, // Tornando opcional
-                    },
-                    {
-                        name: "created_at",
-                        type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",
-                    },
-                    {
-                        name: "updated_at",
-                        type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",
-                        onUpdate: "CURRENT_TIMESTAMP",
-                    },
-                    {
-                        name: "branch_id",
-                        type: "int",
-                        isNullable: false, // Adicionando campo branch_id
-                    }
-                ],
-                foreignKeys: [
-                    {
-                        columnNames: ["branch_id"],
-                        referencedTableName: "branches",
-                        referencedColumnNames: ["id"],
-                    },
-                ],
-            })
+          new Table({
+            name: "products",
+            columns: [
+              {
+                name: "id",
+                type: "uuid",
+                isPrimary: true,
+                generationStrategy: "uuid",
+                default: "uuid_generate_v4()",
+              },
+              {
+                name: "name",
+                type: "varchar",
+                length: "200",
+                isNullable: false,
+              },
+              {
+                name: "amount",
+                type: "int",
+                isNullable: false,
+              },
+              {
+                name: "description",
+                type: "varchar",
+                length: "200",
+                isNullable: false,
+              },
+              {
+                name: "url_cover",
+                type: "varchar",
+                length: "200",
+                isNullable: true,
+              },
+              {
+                name: "branch_id",
+                type: "uuid",
+                isNullable: false,
+              },
+              {
+                name: "created_at",
+                type: "timestamp",
+                default: "now()",
+              },
+              {
+                name: "updated_at",
+                type: "timestamp",
+                default: "now()",
+              },
+            ],
+          })
         );
-    }
-
-    public async down(queryRunner: QueryRunner): Promise<void> {
+    
+        await queryRunner.createForeignKey(
+          "products",
+          new TableForeignKey({
+            columnNames: ["branch_id"],
+            referencedTableName: "branches",
+            referencedColumnNames: ["id"],
+            onDelete: "CASCADE",
+          })
+        );
+      }
+    
+      public async down(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.dropTable("products");
+      }
     }
-}

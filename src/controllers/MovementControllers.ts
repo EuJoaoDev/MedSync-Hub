@@ -114,21 +114,21 @@ class MovementsController {
             // const token = req.headers.authorization?.split(" ")[1];
 
             // if (!token) {
-            //     return res.status(401).json({ message: "Token inválido" });
+            //     return res.status(401).json({ message: "Token inválido" });
             // }
 
             // const decoded = jwt.verify(token, process.env.JWT_SECRET ?? "") as dataJwt;
 
-            // Buscar a filial de origem (usuário autenticado)
+            // Buscar a filial de origem (usuário autenticado)
             const branch = await this.branchRepository.findOne({ where: { id: Number(req.userId) } });
 
-            // Verificar se o perfil é 'BRANCH' e se o userId corresponde à filial
+            // Verificar se o perfil é 'BRANCH' e se o userId corresponde à filial
             // if (decoded.profile !== "BRANCH" || Number(decoded.userId) !== branch?.user_id) {
             //     return res.status(403).json({ message: "Acesso negado" });
             // }
 
             if (!product_id || !destination_branch_id || !quantity) {
-                return res.status(400).json({ message: "Todos os campos são obrigatórios" });
+                return res.status(400).json({ message: "Todos os campos são obrigatórios" });
             }
 
             if (quantity <= 0) {
@@ -138,26 +138,26 @@ class MovementsController {
             // 🔹 Verificar se a filial de destino existe
             const destinationBranch = await this.branchRepository.findOne({ where: { id: Number(destination_branch_id) } });
             if (!destinationBranch) {
-                return res.status(404).json({ message: "Filial de destino não encontrada" });
+                return res.status(404).json({ message: "Filial de destino não encontrada" });
             }
 
-            // 🔹 Verificar se a filial de origem e destino são diferentes
+            // 🔹 Verificar se a filial de origem e destino são diferentes
             if (Number(branch?.user_id) === Number(destination_branch_id)) {
-                return res.status(400).json({ message: "A filial de origem não pode ser a mesma que a filial de destino" });
+                return res.status(400).json({ message: "A filial de origem não pode ser a mesma que a filial de destino" });
             }
 
             // 🔹 Buscar o produto
             const product = await this.productRepository.findOne({ where: { id: Number(product_id) } });
             if (!product) {
-                return res.status(404).json({ message: "Produto não encontrado" });
+                return res.status(404).json({ message: "Produto não encontrado" });
             }
 
-            // 🔹 Verificar se a quantidade solicitada está disponível
+            // 🔹 Verificar se a quantidade solicitada está disponível
             if (product.amount < quantity) {
-                return res.status(400).json({ message: "Estoque insuficiente para essa movimentação" });
+                return res.status(400).json({ message: "Estoque insuficiente para essa movimentação" });
             }
 
-            // 🔹 Criar a movimentação com status PENDING
+            // 🔹 Criar a movimentação com status PENDING
             const createMovements = await this.movementsRepository.save({
                 destination_branch_id,
                 product_id,
@@ -169,7 +169,7 @@ class MovementsController {
             await this.productRepository.update(product.id, { amount: product.amount - quantity });
 
             return res.status(201).json({
-                message: "Movimentação cadastrada com sucesso!",
+                message: "Movimentação cadastrada com sucesso!",
                 movement: {
                     id: createMovements.id,
                     destination_branch_id: createMovements.destination_branch_id,
@@ -181,7 +181,7 @@ class MovementsController {
 
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: "Erro ao processar requisição" });
+            res.status(500).json({ message: "Erro ao processar requisição" });
         }
     }
     listMovements = async (req: Request, res: Response) => {
@@ -190,15 +190,10 @@ class MovementsController {
             res.status(200).json(moviments)
         } catch (error) {
             console.error(error);
-            res.status(500).json({ message: "Erro ao processar requisição" });
+            res.status(500).json({ message: "Erro ao processar requisição" });
         }
 
     }
-
-    updateStatusMovements = async (req:Response, res:Response)=>{
-
-    }
-
 }
 
 export default MovementsController

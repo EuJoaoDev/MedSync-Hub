@@ -86,3 +86,17 @@
 [24-02-2025 08:37:37.048 PM] info: 	O servidor está rodando em http://localhost:3000
 [24-02-2025 08:38:02.567 PM] info: 	O servidor está rodando em http://localhost:3000
 [24-02-2025 08:39:06.346 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 08:41:34.254 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 08:55:32.655 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 08:55:37.673 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 08:55:58.209 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 08:59:26.756 PM] error: 	relação "movements" não existe
+[24-02-2025 08:59:34.326 PM] error: 	relação "movements" não existe
+[24-02-2025 09:01:25.635 PM] error: 	relação "movements" não existe
+[24-02-2025 09:01:27.065 PM] error: 	relação "movements" não existe
+[24-02-2025 09:07:35.882 PM] error: 	relação "movements" não existe
+[24-02-2025 09:09:11.514 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 09:09:44.436 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 09:09:47.010 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 09:11:03.658 PM] info: 	O servidor está rodando em http://localhost:3000
+[24-02-2025 09:35:41.776 PM] info: 	O servidor está rodando em http://localhost:3000

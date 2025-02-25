@@ -13,6 +13,7 @@ import { handleError } from "./middlewares/handleError";
 import authRouter from "./routes/auth.routes";
 import logger from "./config/winston";
 import productRouter from "./routes/product.routes";
+import movementRouter from "./routes/movement.routes";
 
 
 const app = express();
@@ -29,7 +30,7 @@ app.use('/user', userRouter);
 
 app.use('/product', productRouter)
 app.use('/products', productRouter)
-
+app.use('/movements', movementRouter)
 
 
 app.get("/env", (req, res) => {

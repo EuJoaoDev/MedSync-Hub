@@ -14,6 +14,7 @@ import authRouter from "./routes/auth.routes";
 import logger from "./config/winston";
 import productRouter from "./routes/product.routes";
 import movementRouter from "./routes/movement.routes";
+import movementsRouter from "./routes/movement.routes";
 
 
 const app = express();
@@ -31,6 +32,10 @@ app.use('/user', userRouter);
 app.use('/product', productRouter)
 app.use('/products', productRouter)
 app.use('/movements', movementRouter)
+//DÉCIMO PRIMEIRO REQUISITO
+app.use('/movements/:id/', movementsRouter)
+//DÉCIMO SEGUNDO REQUISITO
+app.use('/movements/status/:id/end/', movementsRouter)
 
 
 app.get("/env", (req, res) => {

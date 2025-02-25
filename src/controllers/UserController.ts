@@ -38,6 +38,8 @@
 // export default UserController;
 
 
+//ABAIXO FUNCIONAL
+
 import { NextFunction, Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { User } from "../entities/User";
@@ -475,3 +477,4 @@ class UserController {
 
 }
 export default UserController;
+

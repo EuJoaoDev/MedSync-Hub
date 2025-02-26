@@ -10,7 +10,7 @@ export const isBranch = (req: Request, res: Response, next: NextFunction) => {
   }
 
   const token = authHeader.split(" ")[1]; // Pegando apenas o token (Bearer <token>)
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as any; // Decodifica o token
 

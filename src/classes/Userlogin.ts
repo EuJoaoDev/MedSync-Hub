@@ -3,4 +3,4 @@ class UserLogin {
   password: string;
 }
 
-export default UserLogin
+export default UserLogin;

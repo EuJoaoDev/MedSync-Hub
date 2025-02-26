@@ -5,4 +5,4 @@ class PayloadJwt {
   profile: string;
 }
 
-export default PayloadJwt
+export default PayloadJwt;

@@ -1,36 +1,34 @@
-// import { Router } from "express";
-// import MovementController from "../controllers/MovementControllers";
-// import verifyToken from "../middlewares/auth";
-// import { isBranch } from "../middlewares/isBranches";
-
-// const movementRouter = Router();
-
-// movementRouter.post("/", verifyToken, isBranch, MovementController.create);
-
-// export default movementRouter;
-
-
 //ABAIXO FUNCIONAL
-import { Router } from "express"
+import { Router } from "express";
 import verifyToken from "../middlewares/auth";
 import MovementsController from "../controllers/MovementControllers";
 import { Request, Response, NextFunction } from "express";
 
 const movementsRouter = Router();
 
-const movementsControler = new MovementsController()
-
+const movementsControler = new MovementsController();
 
 //@ts-ignore
-movementsRouter.post("/", (req, res, next) => verifyToken(["BRANCH"], req, res, next), movementsControler.createMovements)
-movementsRouter.get("/", (req, res, next) => verifyToken(["BRANCH"], req, res, next), movementsControler.listMovements)
+movementsRouter.post(
+  "/",
+  (req, res, next) => verifyToken(["BRANCH"], req, res, next),
+  movementsControler.createMovements
+);
+movementsRouter.get(
+  "/",
+  (req, res, next) => verifyToken(["BRANCH"], req, res, next),
+  movementsControler.listMovements
+);
 //@ts-ignore
-movementsRouter.patch("/status/:id", (req, res, next) => verifyToken(["DRIVER"], req, res, next), movementsControler.updateStatusMovements)
-movementsRouter.patch("/status/:id/end", (req, res, next) =>
-    verifyToken(["DRIVER"], req, res, next),
-    movementsControler.updateStatusEndMovements
-  );
+movementsRouter.patch(
+  "/status/:id",
+  (req, res, next) => verifyToken(["DRIVER"], req, res, next),
+  movementsControler.updateStatusMovements
+);
+movementsRouter.patch(
+  "/status/:id/end",
+  (req, res, next) => verifyToken(["DRIVER"], req, res, next),
+  movementsControler.updateStatusEndMovements
+);
 
 export default movementsRouter;
-
-

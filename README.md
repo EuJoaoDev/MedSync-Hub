@@ -52,7 +52,7 @@ Todas as requisições protegidas utilizam **JWT** para autenticação. Além di
 ###  Instalação
 ```bash
 # Clone o repositório
-git clone https://github.com/seu-usuario/medsync-hub.git
+git clone https://github.com/EuJoaoDev/MedSync-Hub
 
 # Acesse o diretório do projeto
 cd medsync-hub

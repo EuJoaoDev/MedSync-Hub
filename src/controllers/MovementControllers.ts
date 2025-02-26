@@ -42,7 +42,7 @@ class MovementsController {
           .json({ message: "A quantidade deve ser maior que zero" });
       }
 
-      // 🔹 Verificar se a filial de destino existe
+      //  Verificar se a filial de destino existe
       const destinationBranch = await this.branchRepository.findOne({
         where: { id: Number(destination_branch_id) },
       });
@@ -52,7 +52,7 @@ class MovementsController {
           .json({ message: "Filial de destino não encontrada" });
       }
 
-      // 🔹 Verificar se a filial de origem e destino são diferentes
+      //  Verificar se a filial de origem e destino são diferentes
       if (Number(branch?.user_id) === Number(destination_branch_id)) {
         return res.status(400).json({
           message:
@@ -60,7 +60,7 @@ class MovementsController {
         });
       }
 
-      // 🔹 Buscar o produto
+      //  Buscar o produto
       const product = await this.productRepository.findOne({
         where: { id: Number(product_id) },
       });
@@ -68,14 +68,14 @@ class MovementsController {
         return res.status(404).json({ message: "Produto não encontrado" });
       }
 
-      // 🔹 Verificar se a quantidade solicitada está disponível
+      //  Verificar se a quantidade solicitada está disponível
       if (product.amount < quantity) {
         return res
           .status(400)
           .json({ message: "Estoque insuficiente para essa movimentação" });
       }
 
-      // 🔹 Criar a movimentação com status PENDING
+      //  Criar a movimentação com status PENDING
       const createMovements = await this.movementsRepository.save({
         destination_branch_id,
         product_id,
@@ -83,7 +83,7 @@ class MovementsController {
         status: "PENDING",
       });
 
-      // 🔹 Atualizar a quantidade do produto na filial de origem
+      //  Atualizar a quantidade do produto na filial de origem
       await this.productRepository.update(product.id, {
         amount: product.amount - quantity,
       });
@@ -126,7 +126,7 @@ class MovementsController {
           .json({ message: "ID da movimentação é obrigatório" });
       }
 
-      // 🔹 Buscar a movimentação
+      //  Buscar a movimentação
       const movement = await this.movementsRepository.findOne({
         where: { id: movementId },
       });
@@ -134,11 +134,11 @@ class MovementsController {
         return res.status(404).json({ message: "Movimentação não encontrada" });
       }
 
-      // 🔹 Atualizar o status
+      //  Atualizar o status
       await this.movementsRepository.update(movementId, { status });
       // await this.movementsRepository.update(movementId, { driver_id: userId });
 
-      // 🔹 Buscar novamente a movimentação para retornar os dados atualizados
+      //  Buscar novamente a movimentação para retornar os dados atualizados
       const updatedMovement = await this.movementsRepository.findOne({
         where: { id: movementId },
       });
@@ -173,7 +173,7 @@ class MovementsController {
           .json({ message: "ID da movimentação é obrigatório" });
       }
 
-      // 🔹 Buscar a movimentação
+      //  Buscar a movimentação
       const movement = await this.movementsRepository.findOne({
         where: { id: movementId },
       });
@@ -181,10 +181,10 @@ class MovementsController {
         return res.status(404).json({ message: "Movimentação não encontrada" });
       }
 
-      // 🔹 Atualizar o status da movimentação para "FINISHED"
+      //  Atualizar o status da movimentação para "FINISHED"
       await this.movementsRepository.update(movementId, { status });
 
-      // 🔹 Buscar novamente a movimentação para retornar os dados atualizados
+      //  Buscar novamente a movimentação para retornar os dados atualizados
       const updatedMovement = await this.movementsRepository.findOne({
         where: { id: movementId },
       });

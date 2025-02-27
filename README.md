@@ -15,17 +15,17 @@ Com um sistema robusto e escalável, essa solução facilitará o gerenciamento 
 - **Dotenv** - Gerenciamento de variáveis de ambiente
 
 ##  Funcionalidades
-### 🔹 Gerenciamento de Usuários
+###  Gerenciamento de Usuários
 ✅ Cadastro de usuários (ADMIN, FILIAL e MOTORISTA)
 ✅ Login e autenticação com JWT
 ✅ Listagem de usuários com filtros por perfil
 ✅ Atualização de dados e status de usuários
 
-### 🔹 Gerenciamento de Produtos
+###  Gerenciamento de Produtos
 ✅ Cadastro de produtos por filiais
 ✅ Listagem de produtos disponíveis
 
-### 🔹 Movimentação de Produtos
+###  Movimentação de Produtos
 ✅ Solicitação de transferência entre filiais
 ✅ Atualização do status da movimentação (Pendente, Em Andamento, Concluído)
 ✅ Controle de estoque e rastreabilidade
@@ -83,7 +83,7 @@ npm start
 A API estará disponível em **http://localhost:3000**.
 
 ## 🔄 Endpoints da API
-### 🔹 Usuários
+###  Usuários
 - **POST /users** → Cadastro de usuário *(ADMIN apenas)*
 - **POST /login** → Autenticação
 - **GET /users** → Listagem de usuários *(ADMIN apenas)*
@@ -91,20 +91,20 @@ A API estará disponível em **http://localhost:3000**.
 - **PUT /users/:id** → Atualização de usuário *(ADMIN ou o próprio motorista)*
 - **PATCH /users/:id/status** → Atualização de status *(ADMIN apenas)*
 
-### 🔹 Produtos
+###  Produtos
 - **POST /products** → Cadastro de produtos *(FILIAL apenas)*
 - **GET /products** → Listagem de produtos *(FILIAL apenas)*
 
-### 🔹 Movimentações
+###  Movimentações
 - **POST /movements/** → Cadastro de movimentação *(FILIAL apenas)*
 - **GET /movements** → Listagem de movimentações *(FILIAL e MOTORISTA)*
 - **PATCH /movements/:id/start** → Iniciar movimentação *(MOTORISTA apenas)*
 - **PATCH /movements/:id/end** → Finalizar movimentação *(MOTORISTA que iniciou)*
 
 ## 📈 Melhorias Futuras
-🔹 Implementação de logs para auditoria
-🔹 Integração com serviços externos de rastreamento
-🔹 Interface gráfica para facilitar a gestão
+ Implementação de logs para auditoria
+ Integração com serviços externos de rastreamento
+ Interface gráfica para facilitar a gestão
 
 
 

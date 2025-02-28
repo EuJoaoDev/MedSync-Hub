@@ -110,3 +110,7 @@ A API estará disponível em **http://localhost:3000**.
 
 ---
 📩 **Dúvidas ou sugestões?** Entre em contato! 💬
+
+
+Quadro Trello - https://trello.com/b/tFd7P9UY/projeto-modulo-2
+Link vídeo - https://drive.google.com/file/d/11OQfnbrcG0MNl_btS_bRevZ7Pp5Ug-QZ/view?usp=sharing

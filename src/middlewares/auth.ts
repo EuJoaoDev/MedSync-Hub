@@ -2,28 +2,45 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import AppError from "../utils/AppError";
 
-type dataJwt = JwtPayload & { userId: string };
+type dataJwt = JwtPayload & { userId: number; roles: string[] };
 
-export interface AuthRequest extends Request {
-  userId: string;
-}
-
-export
-const verifyToken = (
-  req: Request & { userId: string },
-  _res: Response,
+export const verifyToken = (
+  listaPermissoes: string[],
+  req: Request,
+  res: Response,
   next: NextFunction
 ) => {
   try {
+    console.log("Request body in verifyToken middleware:", req.body);
     const token = req.headers.authorization?.split(" ")[1] ?? "";
 
     if (!token) {
-      throw new AppError("Token não informado", 401);
+      res.status(401).json("Token inválido!");
+      return;
     }
 
-    const data = jwt.verify(token, process.env.JWT_SECRET ?? "") as dataJwt
+    const payload = jwt.verify(token, process.env.JWT_SECRET ?? "") as dataJwt;
 
-    req.userId = data.userId
+    req.userId = payload.userId;
+
+    const profile = payload.profile;
+
+    let hasPermission = false;
+
+    if (listaPermissoes.includes(profile)) {
+      hasPermission = true;
+    }
+
+    if (!hasPermission) {
+      res
+        .status(401)
+        .json({
+          message: "Usuário não possui autorização para acessar este recurso!",
+        });
+      return;
+    }
+
+    req.userId = Number(payload.userId);
 
     next();
   } catch (error) {
